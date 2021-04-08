@@ -1,12 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import BarChart from "./components/charts/bar/BarChart";
+import UbiNavBar from './components/UbiNavBar/UbiNavBar';
+import Map from './components/Map/Map';
+import Map2 from './components/Map/Map2';
+import BootstrapNavbar from './components/NavBar/BootstrapNavbar';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <UbiNavBar />
+    <Map />
+    <BarChart />
   </React.StrictMode>,
   document.getElementById('root')
 );

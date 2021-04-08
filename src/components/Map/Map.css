@@ -1,0 +1,14 @@
+.map-container {
+  position: absolute;
+  top: 60px; /* size of navbar */
+  bottom: 8em;
+  left: 0;
+  right: 0;
+}
+
+#map {
+  position: absolute;
+  top: 4.3em;  /* Adjust to show navigation */
+  bottom: 10em;
+  width: 100%;
+}
