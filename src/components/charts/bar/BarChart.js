@@ -22,7 +22,7 @@ function BarChart() {
     const options = {
         title: {
             display: true,
-            text: 'Covid Exploration'
+            text: 'Covid Exploration',
         },
         scales: {
             yAxes: [

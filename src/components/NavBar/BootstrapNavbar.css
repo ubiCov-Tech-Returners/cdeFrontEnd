@@ -4,3 +4,8 @@
     width: 3.8em;
     margin-top:-.3em;
 }
+
+/* Over ride bootstrap tyle for this component*/
+.navbar-light .navbar-nav .nav-link {
+    color: whitesmoke;
+}

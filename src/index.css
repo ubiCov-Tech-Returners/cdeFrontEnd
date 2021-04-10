@@ -6,8 +6,21 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+/**  fix border issue */
+*, ::after, ::before {
+  box-sizing: unset;
+  /* box-sizing: border-box; */
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.map_pos {
+  position: relative;
+  bottom: 0;  
+  width:100vw;
+  height:30vh;
+  background-color: #343a40!important;
 }

@@ -5,14 +5,30 @@ import reportWebVitals from './reportWebVitals';
 import BarChart from "./components/charts/bar/BarChart";
 import UbiNavBar from './components/UbiNavBar/UbiNavBar';
 import Map from './components/Map/Map';
-import Map2 from './components/Map/Map2';
+import Map2 from './components/Map2/Map';
+import MapGl from './components/Map3/MapboxGLMap';
 import BootstrapNavbar from './components/NavBar/BootstrapNavbar';
+
+import 'bootstrap/dist/css/bootstrap.min.css'; // import bootstrap CSS
 
 ReactDOM.render(
   <React.StrictMode>
-    <UbiNavBar />
-    <Map />
-    <BarChart />
+
+    <BootstrapNavbar />
+    <div className="row">
+      <div className="col-lg-8 col-md-12 col-sm-12">
+        <MapGl />
+      </div>
+    </div>
+
+    <div className="row">
+      <div className="col-lg-8 col-md-12 col-sm-12">
+        <div className="map_pos">
+          <BarChart />
+        </div>
+      </div>
+    </div>
+
   </React.StrictMode>,
   document.getElementById('root')
 );
