@@ -8,26 +8,17 @@ import Map from './components/Map/Map';
 import Map2 from './components/Map2/Map';
 import MapGl from './components/Map3/MapboxGLMap';
 import BootstrapNavbar from './components/NavBar/BootstrapNavbar';
+import App from './components/tutorial/App';
+// import SimpleMap from './components/tutorial/SimpleMap';
+// import Mtut from './components/tutorial/Mtut';
 
 import 'bootstrap/dist/css/bootstrap.min.css'; // import bootstrap CSS
 
 ReactDOM.render(
   <React.StrictMode>
-
     <BootstrapNavbar />
-    <div className="row">
-      <div className="col-lg-8 col-md-12 col-sm-12">
-        <MapGl />
-      </div>
-    </div>
-
-    <div className="row">
-      <div className="col-lg-8 col-md-12 col-sm-12">
-        <div className="map_pos">
-          <BarChart />
-        </div>
-      </div>
-    </div>
+    <MapGl />
+    <BarChart />
 
   </React.StrictMode>,
   document.getElementById('root')
