@@ -27,31 +27,17 @@ const MapboxGLMap = () => {
     const [map, setMap] = useState(null); // merge axios call here
     const mapContainer = useRef();
 
-    const data = {
+    let data = {
         "type": "FeatureCollection",
+        "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
         "features": [
-            {
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [
-                        "-0.30174587349631565",
-                        "51.552182823098406"
-                    ]
-                },
-                "type": "feature",
-                "properties": {
-                    "description": "Brent",
-                    "makerSymbol": "rail-metro",
-                    "title": "London Borough of Brent",
-                    "url": "http://localhost:3000",
-                    "lines": [
-                        "blue"
-                    ],
-                    "address": null
-                }
-            }
+            { "type": "Feature", "properties": { "id": "ak16994521", "mag": 2.3, "time": 1507425650893, "felt": null, "tsunami": 0 }, "geometry": { "type": "Point", "coordinates": [ -151.5129, 63.1016, 0.0 ] } },
+            { "type": "Feature", "properties": { "id": "ak16994519", "mag": 1.7, "time": 1507425289659, "felt": null, "tsunami": 0 }, "geometry": { "type": "Point", "coordinates": [ -150.4048, 63.1224, 105.5 ] } }
+
         ]
     };
+
+
 
     useEffect(() => {
         mapboxgl.accessToken = 'pk.eyJ1IjoidHdpbmUxMmIiLCJhIjoiY2ttZ3hwdmJrMDF4MTJwbXRkNXN2eGExYSJ9.3BXNyT_qhst6zu9BparHGg';
@@ -64,13 +50,24 @@ const MapboxGLMap = () => {
             });
 
             map.on("load", () => {
-                map.addSource('earthquakes', {
+   /*             map.addSource('earthquakes', {
                     type: 'geojson',
-                    data:
-                        'https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson',
+                    data:{data},
+                        //'https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson',
                     cluster: true,
                     clusterMaxZoom: 14, // Max zoom to cluster points on
                     clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
+                });*/
+                map.addSource('earthquakes', {
+                    type: 'geojson',
+                    data: {
+                        "type": "FeatureCollection",
+                        "features": [
+                            { "type": "Feature", "properties": { "id": "ak16994521", "mag": 2.3, "time": 1507425650893, "felt": null, "tsunami": 0 }, "geometry": { "type": "Point", "coordinates": [ -0.30174587349631565, 51.552182823098406, 0.0 ] } },
+                            { "type": "Feature", "properties": { "id": "ak16994519", "mag": 1.7, "time": 1507425289659, "felt": null, "tsunami": 0 }, "geometry": { "type": "Point", "coordinates": [ -0.030458421517778334, 51.388296156862964, 105.5 ] } }
+
+                        ]
+                    }
                 });
 
                 map.addLayer({
