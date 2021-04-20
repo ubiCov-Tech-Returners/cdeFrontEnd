@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-//import BarChart from "./components/charts/bar/BarChart";
+import BarChart from "./components/charts/bar/BarChart";
 import UbiNavBar from './components/UbiNavBar/UbiNavBar';
 import Map from './components/Map/Map';
 import Map2 from './components/Map2/Map';
@@ -18,7 +18,7 @@ ReactDOM.render(
   <React.StrictMode>
     <BootstrapNavbar />
     <MapGl />
- {/*<BarChart />*/}
+    <BarChart />
 
   </React.StrictMode>,
   document.getElementById('root')
