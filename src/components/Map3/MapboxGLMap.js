@@ -9,6 +9,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import mapboxgl, {Layer, Feature} from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+import axios from "axios";
 // import ReactMapGL, { Layer } from 'react-map-gl';
 
 /*TODO - Show hover tooltip with data -kepler style */
@@ -25,7 +26,6 @@ const styles = {
 const MapboxGLMap = () => {
     const [map, setMap] = useState(null); // merge axios call here
     const mapContainer = useRef();
-
 
     let mapData = {
         "type": "FeatureCollection",
@@ -145,6 +145,14 @@ const MapboxGLMap = () => {
 
 
     useEffect(() => {
+        //GET request
+        axios.get('http://localhost:8080/mapinfo/furlough/Brent/')
+            // if promise resolves ,update state
+            .then(response => {console.log(response);})
+            //if error ,log and show default data
+            .catch(err => console.log(err))
+
+
         mapboxgl.accessToken = mBToken;
         const initializeMap = ({setMap, mapContainer}) => {
             const map = new mapboxgl.Map({
@@ -229,7 +237,7 @@ const MapboxGLMap = () => {
         };
 
         if (!map) initializeMap({setMap, mapContainer});
-    }, [map]);
+    }, [map]);//TODO pass empty dependency list instead of map?
 
 
     return <div ref={el => (mapContainer.current = el)} style={styles}>
