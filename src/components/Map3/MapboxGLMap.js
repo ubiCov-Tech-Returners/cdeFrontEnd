@@ -4,19 +4,14 @@
 // https://en.wikipedia.org/wiki/GeoJSON
 // https://mapbox-guide.cube.dev/frontend-and-mapbox
 
-//Add value: ???  to properties of GeoJson
 
 //useReducer
-import React, { useEffect, useRef, useState } from "react";
-import mapboxgl, { Layer, Feature } from "mapbox-gl";
+import React, {useEffect, useRef, useState} from "react";
+import mapboxgl, {Layer, Feature} from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 // import ReactMapGL, { Layer } from 'react-map-gl';
-// import SnotelSites from './Icc_snotel_sites.json';
-/*TODO - move hardcoded values into properties file */
-/*TODO - Use UbiCov data not earthquake */
+
 /*TODO - Show hover tooltip with data -kepler style */
-
-
 
 
 const styles = {
@@ -32,15 +27,105 @@ const MapboxGLMap = () => {
     const mapContainer = useRef();
 
 
-
     let mapData = {
         "type": "FeatureCollection",
-              "features": [
-            { "type": "Feature", "properties": { "description": "Brent","title": "London Borough of Brent", "value": 2.8, "datatype": "cases","colour": "rgb(200,55,207)"}, "geometry": { "type": "Point", "coordinates": [ -0.30174587349631565, 51.552182823098406] } },
-            { "type": "Feature", "properties": { "description": "Brent","title": "London Borough of Brent", "value": 5.8,"datatype": "cases",  "colour": "rgb(000,22,207)"}, "geometry": { "type": "Point", "coordinates": [ -0.011583929705352602, 51.463692453353815] } },
-            { "type": "Feature", "properties": { "description": "Brent","title": "London Borough of Brent", "value": 4.0,"datatype": "cases",  "colour": "rgb(106,55,207)" }, "geometry": { "type": "Point", "coordinates": [ -0.030458421517778334, 51.388296156862964] }},
-            { "type": "Feature", "properties": { "description": "Brent","title": "London Borough of Brent", "value": 3.7,"datatype": "cases",  "colour": "rgb(100,22,207)"}, "geometry": { "type": "Point", "coordinates": [ -0.018132985217334863, 51.57993972933622] }
+        "features": [
+            {
+                "type": "Feature",
+                "properties": {
+                    "Borough": "Brent",
+                    "description": "London Borough of Brent",
+                    "value": 4.6,
+                    "datatype": "cases",
+                    "colour": "rgb(0,169,207)"
+                },
+                "geometry": {"type": "Point", "coordinates": [-0.30174587349631565, 51.552182823098406]}
+            },
 
+            {
+                "type": "Feature",
+                "properties": {
+                    "Borough": "Brent",
+                    "description": "London Borough of Brent",
+                    "value": 7,
+                    "datatype": "cases",
+                    "colour": "rgb(0,169,207)"
+                },
+                "geometry": {"type": "Point", "coordinates": [-0.011583929705352602, 51.463692453353815]}
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "Borough": "Brent",
+                    "description": "London Borough of Brent",
+                    "value": 5,
+                    "datatype": "cases",
+                    "colour": "rgb(0,169,207)"
+                },
+                "geometry": {"type": "Point", "coordinates": [-0.030458421517778334, 51.388296156862964]}
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "Borough": "Brent",
+                    "description": "London Borough of Brent",
+                    "value": 9,
+                    "datatype": "cases",
+                    "colour": "rgb(0,169,207)"
+                },
+                "geometry": {"type": "Point", "coordinates": [-0.018132985217334863, 51.57993972933622]}
+            }
+
+        ]
+    };
+
+    let mapData2 = {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "properties": {
+                    "Borough": "Brent",
+                    "description": "London Borough of Brent",
+                    "value": 6.8,
+                    "datatype": "cases",
+                    "colour": "rgb(178,24,43)"
+                },
+                "geometry": {"type": "Point", "coordinates": [-0.30174587349631565, 51.552182823098406]}
+            },
+
+            {
+                "type": "Feature",
+                "properties": {
+                    "Borough": "Brent",
+                    "description": "London Borough of Brent",
+                    "value": 7,
+                    "datatype": "cases",
+                    "colour": "rgb(178,24,43)"
+                },
+                "geometry": {"type": "Point", "coordinates": [-0.011583929705352602, 51.463692453353815]}
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "Borough": "Brent",
+                    "description": "London Borough of Brent",
+                    "value": 6,
+                    "datatype": "cases",
+                    "colour": "rgb(178,24,43)"
+                },
+                "geometry": {"type": "Point", "coordinates": [-0.030458421517778334, 51.388296156862964]}
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "Borough": "Brent",
+                    "description": "London Borough of Brent",
+                    "value": 3.2,
+                    "datatype": "cases",
+                    "colour": "rgb(178,24,43)"
+                },
+                "geometry": {"type": "Point", "coordinates": [-0.019, 51.57993972933622]}
             }
 
         ]
@@ -50,20 +135,18 @@ const MapboxGLMap = () => {
     const mBToken = 'pk.eyJ1IjoidHdpbmUxMmIiLCJhIjoiY2ttZ3hwdmJrMDF4MTJwbXRkNXN2eGExYSJ9.3BXNyT_qhst6zu9BparHGg';
     const minZoomForCircle = 7;
     const maxZoomForCircle = 16;
-    const valueRangeBottom = 1;
-    const valueRangeTop= 6;
-    const minZoomCircleRadiusBottom= 1;
-    const minZoomCircleRadiusTop= 4;
+    const valueRangeBottom = 0;
+    const valueRangeTop = 10;
+    const minZoomCircleRadiusBottom = 1;
+    const minZoomCircleRadiusTop = 4;
 
-    const maxZoomCircleRadiusBottom= 5;
-    const maxZoomCircleRadiusTop= 50;
-
-
+    const maxZoomCircleRadiusBottom = 5;
+    const maxZoomCircleRadiusTop = 50;
 
 
     useEffect(() => {
         mapboxgl.accessToken = mBToken;
-        const initializeMap = ({ setMap, mapContainer }) => {
+        const initializeMap = ({setMap, mapContainer}) => {
             const map = new mapboxgl.Map({
                 container: mapContainer.current,
                 style: "mapbox://styles/mapbox/dark-v10", // stylesheet location
@@ -74,15 +157,20 @@ const MapboxGLMap = () => {
             map.on("load", () => {
 
 
-
                 map.addSource('ubicov', {
                     type: 'geojson',
                     data: mapData
                 });
 
+                map.addSource('ubicov2', {
+                    type: 'geojson',
+                    data: mapData2
+                });
+
+
                 map.addLayer(
                     {
-                        'id': 'ubimap-point',
+                        'id': 'ubimap-layer1',
                         'type': 'circle',
                         'source': 'ubicov',
                         'minzoom': 7,
@@ -99,36 +187,52 @@ const MapboxGLMap = () => {
                             ],
                             // Color circle from feature properties
                             'circle-color': ['get', 'colour'],
-                            'circle-stroke-color': 'white',
+                            'circle-stroke-color': 'black',
                             'circle-stroke-width': 1,
+                            // circle opacity between 0-1 different for two data sets to show through
+                            'circle-opacity':0.8
 
-                            // TODO - change or remove as heat map is NOT being used
-                            //  Transition from heatmap to circle layer by zoom level
-                            'circle-opacity': [
+                        }
+                    }
+                );
+                map.addLayer(
+                    {
+                        'id': 'ubimap-layer2',
+                        'type': 'circle',
+                        'source': 'ubicov2',
+                        'minzoom': 7,
+                        'paint': {
+                            // Size circle radius by value from feature properties  and zoom level
+                            'circle-radius': [
                                 'interpolate',
                                 ['linear'],
                                 ['zoom'],
-                                7,
-                                0,
-                                8,
-                                1
-                            ]
+                                minZoomForCircle,
+                                ['interpolate', ['linear'], ['get', 'value'], valueRangeBottom, minZoomCircleRadiusBottom, valueRangeTop, minZoomCircleRadiusTop],
+                                maxZoomForCircle,
+                                ['interpolate', ['linear'], ['get', 'value'], valueRangeBottom, maxZoomCircleRadiusBottom, valueRangeTop, maxZoomCircleRadiusTop]
+                            ],
+                            // Color circle from feature properties
+                            'circle-color': ['get', 'colour'],
+                            'circle-stroke-color': 'black',
+                            'circle-stroke-width': 1,
+                            // circle opacity between 0-1 different for two data sets to show through
+                            'circle-opacity':0.6
+
                         }
                     }
                 );
 
+                setMap(map);
+                map.resize();
+            });
+        };
 
-
-        setMap(map);
-        map.resize();
-    });
-};
-
-        if (!map) initializeMap({ setMap, mapContainer });
+        if (!map) initializeMap({setMap, mapContainer});
     }, [map]);
 
 
-    return <div ref={el => (mapContainer.current = el)} style={styles} >
+    return <div ref={el => (mapContainer.current = el)} style={styles}>
         {/* <Layer {...parkLayer} paint={{ 'fill-color': parkColor }} /> */}
     </div>;
 };
