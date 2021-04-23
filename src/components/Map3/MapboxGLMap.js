@@ -11,8 +11,9 @@ import mapboxgl, {Layer, Feature} from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import axios from "axios";
 // import ReactMapGL, { Layer } from 'react-map-gl';
-
-/*TODO - Show hover tooltip with data -kepler style */
+/*TODO - Pass normalised data for furlough */
+/*TODO - Display covid cases as second layer of circles - normalise covid cases*/
+/*TODO - Show hover tooltip with data values */
 
 
 const styles = {
@@ -27,57 +28,7 @@ const MapboxGLMap = () => {
     const [map, setMap] = useState(null); // merge axios call here
     const mapContainer = useRef();
 
-    let mapData = {
-        "type": "FeatureCollection",
-        "features": [
-            {
-                "type": "Feature",
-                "properties": {
-                    "Borough": "Brent",
-                    "description": "London Borough of Brent",
-                    "value": 4.6,
-                    "datatype": "cases",
-                    "colour": "rgb(0,169,207)"
-                },
-                "geometry": {"type": "Point", "coordinates": [-0.30174587349631565, 51.552182823098406]}
-            },
-
-            {
-                "type": "Feature",
-                "properties": {
-                    "Borough": "Brent",
-                    "description": "London Borough of Brent",
-                    "value": 7,
-                    "datatype": "cases",
-                    "colour": "rgb(0,169,207)"
-                },
-                "geometry": {"type": "Point", "coordinates": [-0.011583929705352602, 51.463692453353815]}
-            },
-            {
-                "type": "Feature",
-                "properties": {
-                    "Borough": "Brent",
-                    "description": "London Borough of Brent",
-                    "value": 5,
-                    "datatype": "cases",
-                    "colour": "rgb(0,169,207)"
-                },
-                "geometry": {"type": "Point", "coordinates": [-0.030458421517778334, 51.388296156862964]}
-            },
-            {
-                "type": "Feature",
-                "properties": {
-                    "Borough": "Brent",
-                    "description": "London Borough of Brent",
-                    "value": 9,
-                    "datatype": "cases",
-                    "colour": "rgb(0,169,207)"
-                },
-                "geometry": {"type": "Point", "coordinates": [-0.018132985217334863, 51.57993972933622]}
-            }
-
-        ]
-    };
+    let mapData = {};
 
 
     /*  let mapData2 = {
@@ -136,8 +87,8 @@ const MapboxGLMap = () => {
     const mBToken = 'pk.eyJ1IjoidHdpbmUxMmIiLCJhIjoiY2ttZ3hwdmJrMDF4MTJwbXRkNXN2eGExYSJ9.3BXNyT_qhst6zu9BparHGg';
     const minZoomForCircle = 7;
     const maxZoomForCircle = 16;
-    const valueRangeBottom = 0;
-    const valueRangeTop = 10;
+    const valueRangeBottom = 7900;//todo pass from datanormaliser
+    const valueRangeTop = 34000;//todo pass from datanormaliser
     const minZoomCircleRadiusBottom = 1;
     const minZoomCircleRadiusTop = 4;
 
@@ -147,7 +98,7 @@ const MapboxGLMap = () => {
 
     useEffect(() => {
         //GET request
-        axios.get('http://localhost:8080/mapinfo/furlough/Brent/')
+        axios.get('http://localhost:8080/mapinfo/furlough/')
             // if promise resolves ,update state
             .then(response => {
                 console.log(response);
