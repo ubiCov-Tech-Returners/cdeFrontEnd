@@ -79,57 +79,58 @@ const MapboxGLMap = () => {
         ]
     };
 
-    let mapData2 = {
-        "type": "FeatureCollection",
-        "features": [
-            {
-                "type": "Feature",
-                "properties": {
-                    "Borough": "Brent",
-                    "description": "London Borough of Brent",
-                    "value": 6.8,
-                    "datatype": "cases",
-                    "colour": "rgb(178,24,43)"
-                },
-                "geometry": {"type": "Point", "coordinates": [-0.30174587349631565, 51.552182823098406]}
-            },
 
-            {
-                "type": "Feature",
-                "properties": {
-                    "Borough": "Brent",
-                    "description": "London Borough of Brent",
-                    "value": 7,
-                    "datatype": "cases",
-                    "colour": "rgb(178,24,43)"
-                },
-                "geometry": {"type": "Point", "coordinates": [-0.011583929705352602, 51.463692453353815]}
-            },
-            {
-                "type": "Feature",
-                "properties": {
-                    "Borough": "Brent",
-                    "description": "London Borough of Brent",
-                    "value": 6,
-                    "datatype": "cases",
-                    "colour": "rgb(178,24,43)"
-                },
-                "geometry": {"type": "Point", "coordinates": [-0.030458421517778334, 51.388296156862964]}
-            },
-            {
-                "type": "Feature",
-                "properties": {
-                    "Borough": "Brent",
-                    "description": "London Borough of Brent",
-                    "value": 3.2,
-                    "datatype": "cases",
-                    "colour": "rgb(178,24,43)"
-                },
-                "geometry": {"type": "Point", "coordinates": [-0.019, 51.57993972933622]}
-            }
+    /*  let mapData2 = {
+          "type": "FeatureCollection",
+          "features": [
+              {
+                  "type": "Feature",
+                  "properties": {
+                      "Borough": "Brent",
+                      "description": "London Borough of Brent",
+                      "value": 6.8,
+                      "datatype": "cases",
+                      "colour": "rgb(178,24,43)"
+                  },
+                  "geometry": {"type": "Point", "coordinates": [-0.30174587349631565, 51.552182823098406]}
+              },
 
-        ]
-    };
+              {
+                  "type": "Feature",
+                  "properties": {
+                      "Borough": "Brent",
+                      "description": "London Borough of Brent",
+                      "value": 7,
+                      "datatype": "cases",
+                      "colour": "rgb(178,24,43)"
+                  },
+                  "geometry": {"type": "Point", "coordinates": [-0.011583929705352602, 51.463692453353815]}
+              },
+              {
+                  "type": "Feature",
+                  "properties": {
+                      "Borough": "Brent",
+                      "description": "London Borough of Brent",
+                      "value": 6,
+                      "datatype": "cases",
+                      "colour": "rgb(178,24,43)"
+                  },
+                  "geometry": {"type": "Point", "coordinates": [-0.030458421517778334, 51.388296156862964]}
+              },
+              {
+                  "type": "Feature",
+                  "properties": {
+                      "Borough": "Brent",
+                      "description": "London Borough of Brent",
+                      "value": 3.2,
+                      "datatype": "cases",
+                      "colour": "rgb(178,24,43)"
+                  },
+                  "geometry": {"type": "Point", "coordinates": [-0.019, 51.57993972933622]}
+              }
+
+          ]
+      };*/
 
     //Map properties
     const mBToken = 'pk.eyJ1IjoidHdpbmUxMmIiLCJhIjoiY2ttZ3hwdmJrMDF4MTJwbXRkNXN2eGExYSJ9.3BXNyT_qhst6zu9BparHGg';
@@ -148,7 +149,10 @@ const MapboxGLMap = () => {
         //GET request
         axios.get('http://localhost:8080/mapinfo/furlough/Brent/')
             // if promise resolves ,update state
-            .then(response => {console.log(response);})
+            .then(response => {
+                console.log(response);
+                mapData = response.data;
+            })
             //if error ,log and show default data
             .catch(err => console.log(err))
 
@@ -170,11 +174,11 @@ const MapboxGLMap = () => {
                     data: mapData
                 });
 
-                map.addSource('ubicov2', {
-                    type: 'geojson',
-                    data: mapData2
-                });
-
+                /*  map.addSource('ubicov2', {
+                      type: 'geojson',
+                      data: mapData2
+                  });
+  */
 
                 map.addLayer(
                     {
@@ -198,38 +202,38 @@ const MapboxGLMap = () => {
                             'circle-stroke-color': 'black',
                             'circle-stroke-width': 1,
                             // circle opacity between 0-1 different for two data sets to show through
-                            'circle-opacity':0.8
+                            'circle-opacity': 0.8
 
                         }
                     }
                 );
-                map.addLayer(
-                    {
-                        'id': 'ubimap-layer2',
-                        'type': 'circle',
-                        'source': 'ubicov2',
-                        'minzoom': 7,
-                        'paint': {
-                            // Size circle radius by value from feature properties  and zoom level
-                            'circle-radius': [
-                                'interpolate',
-                                ['linear'],
-                                ['zoom'],
-                                minZoomForCircle,
-                                ['interpolate', ['linear'], ['get', 'value'], valueRangeBottom, minZoomCircleRadiusBottom, valueRangeTop, minZoomCircleRadiusTop],
-                                maxZoomForCircle,
-                                ['interpolate', ['linear'], ['get', 'value'], valueRangeBottom, maxZoomCircleRadiusBottom, valueRangeTop, maxZoomCircleRadiusTop]
-                            ],
-                            // Color circle from feature properties
-                            'circle-color': ['get', 'colour'],
-                            'circle-stroke-color': 'black',
-                            'circle-stroke-width': 1,
-                            // circle opacity between 0-1 different for two data sets to show through
-                            'circle-opacity':0.6
+                /* map.addLayer(
+                     {
+                         'id': 'ubimap-layer2',
+                         'type': 'circle',
+                         'source': 'ubicov2',
+                         'minzoom': 7,
+                         'paint': {
+                             // Size circle radius by value from feature properties  and zoom level
+                             'circle-radius': [
+                                 'interpolate',
+                                 ['linear'],
+                                 ['zoom'],
+                                 minZoomForCircle,
+                                 ['interpolate', ['linear'], ['get', 'value'], valueRangeBottom, minZoomCircleRadiusBottom, valueRangeTop, minZoomCircleRadiusTop],
+                                 maxZoomForCircle,
+                                 ['interpolate', ['linear'], ['get', 'value'], valueRangeBottom, maxZoomCircleRadiusBottom, valueRangeTop, maxZoomCircleRadiusTop]
+                             ],
+                             // Color circle from feature properties
+                             'circle-color': ['get', 'colour'],
+                             'circle-stroke-color': 'black',
+                             'circle-stroke-width': 1,
+                             // circle opacity between 0-1 different for two data sets to show through
+                             'circle-opacity':0.6
 
-                        }
-                    }
-                );
+                         }
+                     }
+                 );*/
 
                 setMap(map);
                 map.resize();
