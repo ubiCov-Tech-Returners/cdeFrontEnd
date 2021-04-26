@@ -19,10 +19,6 @@ class BootstrapNavbar extends React.Component {
                             <NavDropdown.Item href="#action/3.4">Is the spread of Covid-19 in your area related to nights out?</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
-                    <Form inline>
-                        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                        <Button variant="outline-success">Search</Button>
-                    </Form>
                 </Navbar.Collapse>
             </Navbar>
         )
