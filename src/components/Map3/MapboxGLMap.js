@@ -103,7 +103,7 @@ const MapboxGLMap = () => {
             .then(response => {
                 console.log(response);
                 mapData = response.data;
-                localStorage.setItem("apiData", JSON.stringify(mapData.data));
+                localStorage.setItem("apiData", JSON.stringify(response.data));
             })
             //if error ,log and show default data
             .catch(err => console.log(err))
