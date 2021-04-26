@@ -6,8 +6,8 @@
 
 
 //useReducer
-import React, {useEffect, useRef, useState} from "react";
-import mapboxgl, {Layer, Feature} from "mapbox-gl";
+import React, { useEffect, useRef, useState } from "react";
+import mapboxgl, { Layer, Feature } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import axios from "axios";
 // import ReactMapGL, { Layer } from 'react-map-gl';
@@ -103,13 +103,14 @@ const MapboxGLMap = () => {
             .then(response => {
                 console.log(response);
                 mapData = response.data;
+                localStorage.setItem("apiData", JSON.stringify(mapData.data));
             })
             //if error ,log and show default data
             .catch(err => console.log(err))
 
 
         mapboxgl.accessToken = mBToken;
-        const initializeMap = ({setMap, mapContainer}) => {
+        const initializeMap = ({ setMap, mapContainer }) => {
             const map = new mapboxgl.Map({
                 container: mapContainer.current,
                 style: "mapbox://styles/mapbox/dark-v10", // stylesheet location
@@ -191,7 +192,7 @@ const MapboxGLMap = () => {
             });
         };
 
-        if (!map) initializeMap({setMap, mapContainer});
+        if (!map) initializeMap({ setMap, mapContainer });
     }, [map]);//TODO pass empty dependency list instead of map?
 
 
