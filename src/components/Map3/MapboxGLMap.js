@@ -11,8 +11,7 @@ import mapboxgl, {Layer, Feature} from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import axios from "axios";
 // import ReactMapGL, { Layer } from 'react-map-gl';
-/*TODO - Pass normalised data for furlough */
-/*TODO - Display covid cases as second layer of circles - normalise covid cases*/
+/*TODO - Show color legend for  different data types  */
 /*TODO - Show hover tooltip with data values */
 /*TODO - test Mapbox expressions https://github.com/mapbox/mapbox-gl-js/blob/main/test/expression.test.js*/
 
@@ -54,6 +53,14 @@ const MapboxGLMap = () => {
             //if error ,log and show default data
             .catch(err => console.log(err))
 
+        axios.get('http://localhost:8080/mapinfo/covid/cases/')
+            // if promise resolves ,update state
+            .then(response => {
+                console.log(response);
+                localStorage.setItem("apiData2", JSON.stringify(response.data));
+            })
+            //if error ,log and show default data
+            .catch(err => console.log(err))
 
         mapboxgl.accessToken = mBToken;
         const initializeMap = ({setMap, mapContainer}) => {
@@ -68,6 +75,8 @@ const MapboxGLMap = () => {
 
                 const mapDataStr = localStorage.getItem('apiData');
                 const mapData = JSON.parse(mapDataStr);
+                const mapDataStr2 = localStorage.getItem('apiData2');
+                const mapData2 = JSON.parse(mapDataStr2);
 
        /*       Data Normalisation in React
                 Scaling data values in layer using MapBox expressions
@@ -77,12 +86,17 @@ const MapboxGLMap = () => {
 
                 // common scale for all data sets 0-10
                 const commonScaleBottom = 0;
-                const commonScaleTop = 10;
+                const commonScaleTop = 20;
 
                 let rawValues = mapData.features.map(f => f.properties.value);
                 let minValue = Math.min(...rawValues);
                 let maxValue = Math.max(...rawValues);
                 let rawValueRange = maxValue - minValue;
+
+                let rawValues2 = mapData2.features.map(f => f.properties.value);
+                let minValue2 = Math.min(...rawValues2);
+                let maxValue2 = Math.max(...rawValues2);
+                let rawValueRange2 = maxValue2 - minValue2;
 
                 map.addSource('ubicov', {
                     type: 'geojson',
@@ -91,7 +105,7 @@ const MapboxGLMap = () => {
 
                  map.addSource('ubicov2', {
                       type: 'geojson',
-                      data: mapData
+                      data: mapData2
                   });
 
                 //Layer 1 - Dataset 1
@@ -133,12 +147,63 @@ const MapboxGLMap = () => {
                             'circle-color':
                                 ['get', 'colour'],
                             'circle-stroke-color':
-                                'black',
+                                'grey',
                             'circle-stroke-width':
-                                1,
+                                0.75,
                             // circle opacity between 0-1 different for two data sets to show through
                             'circle-opacity':
-                                0.8
+                                0.6
+
+                        }
+                    }
+                )
+                ;
+
+                //Layer 2 - Dataset 2
+                map.addLayer(
+                    {
+                        'id': 'ubimap-layer2',
+                        'type': 'circle',
+                        'source': 'ubicov2',
+                        'minzoom': 7,
+                        'paint': {
+                            // Size circle radius by value from feature properties  and zoom level
+                            'circle-radius': [
+                                'interpolate',
+                                ['linear'],
+                                ['zoom'],
+                                minZoomForCircle,
+                                ['interpolate', ['linear'], ['*', [
+                                    '/',
+                                    ['-', ['get', 'value'], minValue2], rawValueRange2],
+                                    commonScaleTop
+                                ]
+                                    , commonScaleBottom, minZoomCircleRadiusBottom, commonScaleTop, minZoomCircleRadiusTop],
+                                maxZoomForCircle,
+                                ['interpolate', ['linear'], ['*', [
+                                    '/',
+                                    ['-', ['get', 'value'
+                                    ],
+                                        minValue2
+                                    ],
+                                    rawValueRange2
+                                ],
+                                    commonScaleTop
+                                ]
+                                    ,
+                                    commonScaleBottom, maxZoomCircleRadiusBottom, commonScaleTop, maxZoomCircleRadiusTop
+                                ]
+                            ],
+                            // Color circle from feature properties
+                            'circle-color':
+                                ['get', 'colour'],
+                            'circle-stroke-color':
+                                'black',
+                            'circle-stroke-width':
+                                0.8,
+                            // circle opacity between 0-1 different for two data sets to show through
+                            'circle-opacity':
+                                0.3
 
                         }
                     }
