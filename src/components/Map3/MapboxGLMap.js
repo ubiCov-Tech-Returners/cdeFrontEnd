@@ -113,7 +113,7 @@ const MapboxGLMap = () => {
             const map = new mapboxgl.Map({
                 container: mapContainer.current,
                 style: "mapbox://styles/mapbox/dark-v10", // stylesheet location
-                center: [-0.1257400, 51.50853005],//centred around London
+                center: [-0.1257400, 51.50853005],// centred around London
                 zoom: 9
             });
 
