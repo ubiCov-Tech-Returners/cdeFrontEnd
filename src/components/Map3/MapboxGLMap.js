@@ -102,7 +102,6 @@ const MapboxGLMap = () => {
             // if promise resolves ,update state
             .then(response => {
                 console.log(response);
-                mapData = response.data;
                 localStorage.setItem("apiData", JSON.stringify(response.data));
             })
             //if error ,log and show default data
@@ -119,6 +118,9 @@ const MapboxGLMap = () => {
             });
 
             map.on("load", () => {
+
+                const mapDataStr = localStorage.getItem('apiData');
+                const mapData = JSON.parse(mapDataStr);
 
 
                 map.addSource('ubicov', {
