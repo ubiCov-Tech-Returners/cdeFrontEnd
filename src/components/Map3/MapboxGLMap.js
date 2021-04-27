@@ -78,35 +78,68 @@ const MapboxGLMap = () => {
                 const mapDataStr2 = localStorage.getItem('apiData2');
                 const mapData2 = JSON.parse(mapDataStr2);
 
-       /*       Data Normalisation in React
-                Scaling data values in layer using MapBox expressions
-                according to https://www.theanalysisfactor.com/rescaling-variables-to-be-same/
+                map.addSource('ubicov', {
+                    type: 'geojson',
+                    data: mapData
+                });
 
-        */
+
+
+                /*       Data Normalisation in React
+                         Scaling data values in layer using MapBox expressions
+                         according to https://www.theanalysisfactor.com/rescaling-variables-to-be-same/
+
+                 */
 
                 // common scale for all data sets 0-10
                 const commonScaleBottom = 0;
                 const commonScaleTop = 20;
 
+                //Data set 1 - variables needed for scaling
                 let rawValues = mapData.features.map(f => f.properties.value);
                 let minValue = Math.min(...rawValues);
                 let maxValue = Math.max(...rawValues);
                 let rawValueRange = maxValue - minValue;
+
+                //Data set 2 - variables needed for scaling
 
                 let rawValues2 = mapData2.features.map(f => f.properties.value);
                 let minValue2 = Math.min(...rawValues2);
                 let maxValue2 = Math.max(...rawValues2);
                 let rawValueRange2 = maxValue2 - minValue2;
 
-                map.addSource('ubicov', {
-                    type: 'geojson',
-                    data: mapData
+                ///Latitude offset for Layer 2  circles
+                //check solution here https://gis.stackexchange.com/questions/2951/algorithm-for-offsetting-a-latitude-longitude-by-some-amount-of-meters
+
+                //Earth’s radius, sphere
+                const R = 6378137;
+                const Pi = Math.PI;
+
+
+                //lat offsets in meters
+                const dn = 750;
+
+
+
+                //offsetting lat,long of layer 2 circles
+                mapData2.features.forEach(feature => {
+
+                    //Coordinate offsets in radians
+                    let dLat = dn / R;
+
+                    //OffsetPosition, decimal degrees
+                    let dlatO = dLat * 180 / Pi;
+
+                    feature.geometry.coordinates[1] += dlatO;
+
                 });
 
-                 map.addSource('ubicov2', {
-                      type: 'geojson',
-                      data: mapData2
-                  });
+                map.addSource('ubicov2', {
+                    type: 'geojson',
+                    data: mapData2
+                });
+
+
 
                 //Layer 1 - Dataset 1
                 map.addLayer(
@@ -147,7 +180,7 @@ const MapboxGLMap = () => {
                             'circle-color':
                                 ['get', 'colour'],
                             'circle-stroke-color':
-                                'grey',
+                                'black',
                             'circle-stroke-width':
                                 0.75,
                             // circle opacity between 0-1 different for two data sets to show through
