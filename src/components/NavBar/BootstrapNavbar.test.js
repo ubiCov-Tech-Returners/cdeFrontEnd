@@ -15,3 +15,4 @@ test('renders Nav Bar dropdown when Questions link is clicked', () => {
     userEvent.click(dropdownLink);
     expect(screen.getByText('income',{exact:false})).toBeInTheDocument();
 });
+
