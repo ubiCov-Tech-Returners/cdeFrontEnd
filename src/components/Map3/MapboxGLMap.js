@@ -63,7 +63,6 @@ const MapboxGLMap = ({mapDataLayerOne, mapDataLayerTwo}) => {
                     according to https://www.theanalysisfactor.com/rescaling-variables-to-be-same/
                 */
 
-                if(mapDataLayerOne && mapDataLayerTwo) {
                     // common scale for all data sets 0-10
                     const commonScaleBottom = 0;
                     const commonScaleTop = 20;
@@ -208,7 +207,7 @@ const MapboxGLMap = ({mapDataLayerOne, mapDataLayerTwo}) => {
                     }
                 });
 
-                }
+                
                 setMap(map);
                 map.resize();
             });
