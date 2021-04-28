@@ -1,110 +1,40 @@
-import React, {Component} from 'react';
+import React from 'react';
+import {Scatter} from 'react-chartjs-2';
 
-import CanvasJSReact from './canvasjs.react';
-let CanvasJSChart = CanvasJSReact.CanvasJSChart;
+function ScatterChart() {
+
+    let scatter = [
+        { x: 65, y: 75 },
+        { x: 59, y: 49 },
+        { x: 80, y: 90 },
+        { x: 81, y: 29 },
+        { x: 56, y: 36 },
+        { x: 55, y: 25 },
+        { x: 40, y: 18 },
+    ];
 
 
-class ScatterChart extends Component {
-    constructor() {
-        super();
-        this.toggleDataSeries = this.toggleDataSeries.bind(this);
-    }
-    toggleDataSeries(e){
-        if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-            e.dataSeries.visible = false;
-        }
-        else{
-            e.dataSeries.visible = true;
-        }
-        this.chart.render();
-    }
-    render() {
-        const options = {
-            theme: "dark2",
-            animationEnabled: true,
-            title: {
-                text: "Furlough vs Covid Cases"
-            },
-            axisX: {
-                title: "Furlough"
-            },
-            axisY: {
-                title: "Covid Cases",
-                suffix: "%"
-            },
-            legend: {
-                cursor: "pointer",
-                itemclick: this.toggleDataSeries
-            },
-            data: [{
-                type: "scatter",
-                name: "Marker Type 1",
-                markerType: "triangle",
-                showInLegend: true,
-                toolTipContent: "<span style=\"color:#4F81BC \">{name}</span><br>Furlough: {x}<br>Covid Cases: {y}%",
-                dataPoints: [
-                    { x: 100, y: 10 },
-                    { x: 150, y: 15 },
-                    { x: 190, y: 17 },
-                    { x: 250, y: 19 },
-                    { x: 310, y: 21 },
-                    { x: 400, y: 25 },
-                    { x: 500, y: 40 },
-                    { x: 510, y: 50 },
-                    { x: 600, y: 30 },
-                    { x: 700, y: 35 },
-                    { x: 800, y: 40 },
-                    { x: 900, y: 45 },
-                    { x: 1000, y: 47 },
-                    { x: 1100, y: 55 },
-                    { x: 1230, y: 51 },
-                    { x: 1300, y: 60 },
-                    { x: 1330, y: 65 },
-                    { x: 1400, y: 70 },
-                    { x: 1450, y: 71 },
-                    { x: 1500, y: 69 }
-                ]
-            },
-                {
-                    type: "scatter",
-                    name: "Marker Type 2",
-                    showInLegend: true,
-                    markerType: "cross",
-                    toolTipContent: "<span style=\"color:#C0504E \">{name}</span><br>Furlough: {x}<br>Covid Cases: {y}%",
-                    dataPoints: [
-                        { x: 100, y: 25 },
-                        { x: 150, y: 35 },
-                        { x: 190, y: 35 },
-                        { x: 250, y: 40 },
-                        { x: 310, y: 45 },
-                        { x: 400, y: 42 },
-                        { x: 500, y: 57 },
-                        { x: 510, y: 67 },
-                        { x: 600, y: 40 },
-                        { x: 700, y: 46 },
-                        { x: 800, y: 50 },
-                        { x: 900, y: 60 },
-                        { x: 1000, y: 66 },
-                        { x: 1100, y: 79 },
-                        { x: 1230, y: 60 },
-                        { x: 1300, y: 75 },
-                        { x: 1330, y: 80 },
-                        { x: 1400, y: 82 },
-                        { x: 1450, y: 88 },
-                        { x: 1500, y: 87 }
-                    ]
-                }]
-        }
-        return (
-            <div>
-                <CanvasJSChart options = {options}
-                               onRef={ref => this.chart = ref}
-                />
-                {/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
-            </div>
-        );
-    }
+    const data = {
+        datasets: [{
+            label: 'Scatter Dataset',
+            data: [ { x: 65, y: 75 },
+                { x: 59, y: 49 },
+                { x: 80, y: 90 },
+                { x: 81, y: 29 },
+                { x: 56, y: 36 },
+                { x: 55, y: 25 },
+                { x: 40, y: 18 },],
+            backgroundColor: 'rgb(255, 99, 132)'
+        }],
+    };
+    return (
+        <div>
+            <Scatter data={data}/>
+        </div>
+    )
 }
+
+
 
 
 export default ScatterChart;

@@ -1,6 +1,5 @@
 import BootstrapNavbar from "./components/NavBar/BootstrapNavbar";
 import MapGl from "./components/Map3/MapboxGLMap";
-import BarChart from "./components/charts/bar/BarChart";
 import ScatterChart from "./components/charts/scatter/ScatterChart";
 
 import React, { useState } from "react";
@@ -41,9 +40,6 @@ function App() {
       <BootstrapNavbar onQuestionChanged = {fetchQuestionData} />
       <h1>You picked: {questionSelected}</h1>
       <MapGl mapDataLayerOne={mapDataLayerOne} mapDataLayerTwo={mapDataLayerTwo} />
-{/*
-      <BarChart />
-*/}
         <ScatterChart />
     </div>
   );
