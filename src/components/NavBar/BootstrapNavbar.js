@@ -11,7 +11,7 @@ class BootstrapNavbar extends React.Component {
 
         return (
             <Navbar bg="dark" expand="lg">
-                <Navbar.Brand href="#home"><img src="../images/ubiCov-logo2.png" class="ubi_logo" /></Navbar.Brand>
+                <Navbar.Brand href="#home"><img src="../images/ubiCov-logo2.png" className="ubi_logo" /></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
