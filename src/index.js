@@ -9,15 +9,13 @@ import MapGl from './components/Map3/MapboxGLMap';
 import BootstrapNavbar from './components/NavBar/BootstrapNavbar';
 // import SimpleMap from './components/tutorial/SimpleMap';
 // import Mtut from './components/tutorial/Mtut';
+import App from './App';
 
 import 'bootstrap/dist/css/bootstrap.min.css'; // import bootstrap CSS
 
 ReactDOM.render(
   <React.StrictMode>
-    <BootstrapNavbar />
-    <MapGl />
-    <BarChart />
-
+      <App/>
   </React.StrictMode>,
   document.getElementById('root')
 );

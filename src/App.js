@@ -1,23 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
+import BootstrapNavbar from "./components/NavBar/BootstrapNavbar";
+import MapGl from "./components/Map3/MapboxGLMap";
+import BarChart from "./components/charts/bar/BarChart";
+import React from "react";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <BootstrapNavbar />
+      <MapGl />
+      <BarChart />
     </div>
   );
 }
