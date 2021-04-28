@@ -2,13 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import BarChart from "./components/charts/bar/BarChart";
-import UbiNavBar from './components/UbiNavBar/UbiNavBar';
-import Map from './components/Map/Map';
-import MapGl from './components/Map3/MapboxGLMap';
-import BootstrapNavbar from './components/NavBar/BootstrapNavbar';
-// import SimpleMap from './components/tutorial/SimpleMap';
-// import Mtut from './components/tutorial/Mtut';
+
 import App from './App';
 
 import 'bootstrap/dist/css/bootstrap.min.css'; // import bootstrap CSS
