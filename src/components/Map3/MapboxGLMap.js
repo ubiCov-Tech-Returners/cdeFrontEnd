@@ -171,6 +171,7 @@ const MapboxGLMap = ({mapDataLayerOne, mapDataLayerTwo}) => {
                             0.3
                     }
                 });
+
                 // Create a popup, but don't add it to the map yet.
                 const popup = new mapboxgl.Popup({
                     closeButton: false,
@@ -180,7 +181,13 @@ const MapboxGLMap = ({mapDataLayerOne, mapDataLayerTwo}) => {
                     // Change the cursor style as a UI indicator.
                     map.getCanvas().style.cursor = 'pointer';
                     let coordinates = e.features[0].geometry.coordinates.slice();
-                    let description = `${e.features[0].properties.description}<br />${e.features[0].properties.dataType}: ${e.features[0].properties.value}`;
+                    // extracting tool tip text for second data set
+                    let layerOneBorough = e.features[0].properties.borough;
+                    let featureObjTwo = mapDataLayerTwo.features.find(featureObj => featureObj.properties.borough === layerOneBorough);
+                    let popUpTextTwo = `<br />${featureObjTwo.properties.dataType}: ${featureObjTwo.properties.value}`;
+
+                    let popUpText = `${e.features[0].properties.description}<br />${e.features[0].properties.dataType}: ${e.features[0].properties.value}`;
+                    popUpText += popUpTextTwo;
                     // Ensure that if the map is zoomed out such that multiple
                     // copies of the feature are visible, the popup appears
                     // over the copy being pointed to.
@@ -189,7 +196,7 @@ const MapboxGLMap = ({mapDataLayerOne, mapDataLayerTwo}) => {
                     }
                     // Populate the popup and set its coordinates
                     // based on the feature found.
-                    popup.setLngLat(coordinates).setHTML(description).addTo(map);
+                    popup.setLngLat(coordinates).setHTML(popUpText).addTo(map);
                 });
                 map.on('mouseleave', 'ubimap-layer1', function () {
                     map.getCanvas().style.cursor = '';
