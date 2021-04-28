@@ -4,9 +4,12 @@ import BarChart from "./components/charts/bar/BarChart";
 import React from "react";
 
 function App() {
+    const fetchQuestionData = (questionNum) =>{
+        alert('questionNum'+questionNum);
+    }
   return (
     <div>
-      <BootstrapNavbar />
+      <BootstrapNavbar onQuestionChanged = {fetchQuestionData} />
       <MapGl />
       <BarChart />
     </div>
