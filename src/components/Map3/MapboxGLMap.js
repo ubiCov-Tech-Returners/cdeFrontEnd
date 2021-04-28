@@ -63,47 +63,48 @@ const MapboxGLMap = ({mapDataLayerOne, mapDataLayerTwo}) => {
                     according to https://www.theanalysisfactor.com/rescaling-variables-to-be-same/
                 */
 
-                // common scale for all data sets 0-10
-                const commonScaleBottom = 0;
-                const commonScaleTop = 20;
+                if(mapDataLayerOne && mapDataLayerTwo) {
+                    // common scale for all data sets 0-10
+                    const commonScaleBottom = 0;
+                    const commonScaleTop = 20;
 
-                //Data set 1 - variables needed for scaling
-                let rawValues = mapDataLayerOne.features.map(f => f.properties.value);
-                let minValue = Math.min(...rawValues);
-                let maxValue = Math.max(...rawValues);
-                let rawValueRange = maxValue - minValue;
+                    //Data set 1 - variables needed for scaling
+                    let rawValues = mapDataLayerOne.features.map(f => f.properties.value);
+                    let minValue = Math.min(...rawValues);
+                    let maxValue = Math.max(...rawValues);
+                    let rawValueRange = maxValue - minValue;
 
-                //Data set 2 - variables needed for scaling
+                    //Data set 2 - variables needed for scaling
 
-                let rawValues2 = mapDataLayerTwo.features.map(f => f.properties.value);
-                let minValue2 = Math.min(...rawValues2);
-                let maxValue2 = Math.max(...rawValues2);
-                let rawValueRange2 = maxValue2 - minValue2;
+                    let rawValues2 = mapDataLayerTwo.features.map(f => f.properties.value);
+                    let minValue2 = Math.min(...rawValues2);
+                    let maxValue2 = Math.max(...rawValues2);
+                    let rawValueRange2 = maxValue2 - minValue2;
 
-                ///Latitude offset for Layer 2  circles
-                //check solution here https://gis.stackexchange.com/questions/2951/algorithm-for-offsetting-a-latitude-longitude-by-some-amount-of-meters
+                    ///Latitude offset for Layer 2  circles
+                    //check solution here https://gis.stackexchange.com/questions/2951/algorithm-for-offsetting-a-latitude-longitude-by-some-amount-of-meters
 
-                //Earth’s radius, sphere
-                const R = 6378137;
-                const Pi = Math.PI;
-
-
-                //lat offsets in meters
-                const dn = 750;
+                    //Earth’s radius, sphere
+                    const R = 6378137;
+                    const Pi = Math.PI;
 
 
-                //offsetting lat,long of layer 2 circles
-                mapDataLayerTwo.features.forEach(feature => {
+                    //lat offsets in meters
+                    const dn = 750;
 
-                    //Coordinate offsets in radians
-                    let dLat = dn / R;
 
-                    //OffsetPosition, decimal degrees
-                    let dlatO = dLat * 180 / Pi;
+                    //offsetting lat,long of layer 2 circles
+                    mapDataLayerTwo.features.forEach(feature => {
 
-                    feature.geometry.coordinates[1] += dlatO;
+                        //Coordinate offsets in radians
+                        let dLat = dn / R;
 
-                });
+                        //OffsetPosition, decimal degrees
+                        let dlatO = dLat * 180 / Pi;
+
+                        feature.geometry.coordinates[1] += dlatO;
+
+                    });
 
                 map.addSource('ubicov2', {
                     type: 'geojson',
@@ -207,6 +208,7 @@ const MapboxGLMap = ({mapDataLayerOne, mapDataLayerTwo}) => {
                     }
                 });
 
+                }
                 setMap(map);
                 map.resize();
             });
