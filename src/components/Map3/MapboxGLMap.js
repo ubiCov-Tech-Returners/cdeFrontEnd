@@ -9,7 +9,6 @@ import mapboxgl  from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 // import ReactMapGL, { Layer } from 'react-map-gl';
 /*TODO - Show color legend for  different data types  */
-/*TODO - Show hover tooltip with data values */
 /*TODO - test Mapbox expressions https://github.com/mapbox/mapbox-gl-js/blob/main/test/expression.test.js*/
 const styles = {
     // width: "100vw",  // bootstrap now handles width depending on viewport
@@ -18,7 +17,7 @@ const styles = {
     position: "relative"
 };
 const MapboxGLMap = ({mapDataLayerOne, mapDataLayerTwo}) => {
-    const [map, setMap] = useState(null); // merge axios call here
+    const [map, setMap] = useState(null);
     const mapContainer = useRef();
     //Map properties
     const mBToken = 'pk.eyJ1IjoidHdpbmUxMmIiLCJhIjoiY2ttZ3hwdmJrMDF4MTJwbXRkNXN2eGExYSJ9.3BXNyT_qhst6zu9BparHGg';

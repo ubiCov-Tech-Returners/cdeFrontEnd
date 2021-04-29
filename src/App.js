@@ -9,6 +9,8 @@ import axios from "axios";
 function App() {
     const [mapDataLayerOne, setMapDataLayerOne] = useState(null);
     const [mapDataLayerTwo, setMapDataLayerTwo] = useState(null);
+    const [questionChartData, setQuestionChartData] = useState(null);
+
     const [loading, setLoading] = useState(true);
     // Just used to default to question 3
     useEffect(() => {
@@ -33,6 +35,12 @@ function App() {
                 })
                 //if error ,log and show default data
                 .catch(err => console.error(err))
+            //TODO - replace with axios call to questions API
+            if (mapDataLayerOne && mapDataLayerTwo){
+                setQuestionChartData([...mapDataLayerOne.features,...mapDataLayerTwo.features]);
+            }
+
+
         }
     }
     return (
@@ -42,7 +50,7 @@ function App() {
             {(mapDataLayerOne && mapDataLayerTwo && !loading) &&
             <MapGl mapDataLayerOne={mapDataLayerOne} mapDataLayerTwo={mapDataLayerTwo} />
             }
-        <ScatterChart />
+        <ScatterChart  questionChartData={questionChartData} />
     </div>
   );
 }
