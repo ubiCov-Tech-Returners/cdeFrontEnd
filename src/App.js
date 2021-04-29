@@ -80,8 +80,8 @@ function App() {
         <div>
             <BootstrapNavbar onQuestionChanged = {fetchQuestionData} />
             {loading && <h3>Loading mapping data...</h3>}
-            {(mapDataLayerOne && mapDataLayerTwo && !loading) &&
-            <MapGl mapDataLayerOne={mapDataLayerOne} mapDataLayerTwo={mapDataLayerTwo} />
+            {(mapDataLayerOne && mapDataLayerTwo && questionChartPercent && !loading) &&
+            <MapGl mapDataLayerOne={mapDataLayerOne} mapDataLayerTwo={mapDataLayerTwo} questionChartPercent={questionChartPercent} />
             }
             {(questionChartPercent && !loading) &&
             <ScatterChart  questionChartPercent={questionChartPercent} />

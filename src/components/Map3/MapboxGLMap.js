@@ -16,7 +16,7 @@ const styles = {
     height: "calc(80vh - 80px)",
     position: "relative"
 };
-const MapboxGLMap = ({mapDataLayerOne, mapDataLayerTwo}) => {
+const MapboxGLMap = ({mapDataLayerOne, mapDataLayerTwo,questionChartPercent}) => {
     const [map, setMap] = useState(null);
     const mapContainer = useRef();
     //Map properties
@@ -37,11 +37,33 @@ const MapboxGLMap = ({mapDataLayerOne, mapDataLayerTwo}) => {
                 zoom: 9
             });
             map.on("load", () => {
+
+                if (questionChartPercent){
+                    //changing data to a collection of feature objects
+                    let questionChartData = questionChartPercent.map(featureCollection => featureCollection.features[0]);
+                    let uniqueDataTypes = [...new Set(questionChartData.map(featureObj => featureObj.properties.dataType))];
+                    let featuresLayerOne = questionChartData.filter(featureObj => featureObj.properties.dataType === uniqueDataTypes[0].toString());
+                    let featuresLayerTwo = questionChartData.filter(featureObj => featureObj.properties.dataType === uniqueDataTypes[1].toString());
+                    mapDataLayerOne.features = featuresLayerOne;
+                    mapDataLayerTwo.features = featuresLayerTwo;
+
+                    console.log('uniqueDataTypes'+uniqueDataTypes.toString());
+
+                    console.log('mapDataLayerOne.features'+mapDataLayerOne.features.toString());
+                    mapDataLayerOne = {
+                        "type": "FeatureCollection",
+                        "features": [...featuresLayerOne]
+                    };
+                    mapDataLayerTwo = {
+                        "type": "FeatureCollection",
+                        "features": [...featuresLayerTwo]
+                    };
+
+                }
                 map.addSource('ubicov', {
                     type: 'geojson',
                     data: mapDataLayerOne
                 });
-                console.log(mapDataLayerOne);
                 /*  Data Normalisation in React
                     Scaling data values in layer using MapBox expressions
                     according to https://www.theanalysisfactor.com/rescaling-variables-to-be-same/
