@@ -38,18 +38,11 @@ const MapboxGLMap = ({mapDataLayerOne, mapDataLayerTwo,questionChartPercent}) =>
             });
             map.on("load", () => {
 
-                if (questionChartPercent){
                     //changing data to a collection of feature objects
                     let questionChartData = questionChartPercent.map(featureCollection => featureCollection.features[0]);
                     let uniqueDataTypes = [...new Set(questionChartData.map(featureObj => featureObj.properties.dataType))];
                     let featuresLayerOne = questionChartData.filter(featureObj => featureObj.properties.dataType === uniqueDataTypes[0].toString());
                     let featuresLayerTwo = questionChartData.filter(featureObj => featureObj.properties.dataType === uniqueDataTypes[1].toString());
-                    mapDataLayerOne.features = featuresLayerOne;
-                    mapDataLayerTwo.features = featuresLayerTwo;
-
-                    console.log('uniqueDataTypes'+uniqueDataTypes.toString());
-
-                    console.log('mapDataLayerOne.features'+mapDataLayerOne.features.toString());
                     mapDataLayerOne = {
                         "type": "FeatureCollection",
                         "features": [...featuresLayerOne]
@@ -59,7 +52,6 @@ const MapboxGLMap = ({mapDataLayerOne, mapDataLayerTwo,questionChartPercent}) =>
                         "features": [...featuresLayerTwo]
                     };
 
-                }
                 map.addSource('ubicov', {
                     type: 'geojson',
                     data: mapDataLayerOne
