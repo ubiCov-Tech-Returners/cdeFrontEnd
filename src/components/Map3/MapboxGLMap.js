@@ -16,7 +16,7 @@ const styles = {
     height: "calc(80vh - 80px)",
     position: "relative"
 };
-const MapboxGLMap = ({mapDataLayerOne, mapDataLayerTwo,questionChartPercent}) => {
+const MapboxGLMap = ({questionChartPercent}) => {
     const [map, setMap] = useState(null);
     const mapContainer = useRef();
     //Map properties
@@ -43,11 +43,11 @@ const MapboxGLMap = ({mapDataLayerOne, mapDataLayerTwo,questionChartPercent}) =>
                     let uniqueDataTypes = [...new Set(questionChartData.map(featureObj => featureObj.properties.dataType))];
                     let featuresLayerOne = questionChartData.filter(featureObj => featureObj.properties.dataType === uniqueDataTypes[0].toString());
                     let featuresLayerTwo = questionChartData.filter(featureObj => featureObj.properties.dataType === uniqueDataTypes[1].toString());
-                    mapDataLayerOne = {
+                    let mapDataLayerOne = {
                         "type": "FeatureCollection",
                         "features": [...featuresLayerOne]
                     };
-                    mapDataLayerTwo = {
+                    let mapDataLayerTwo = {
                         "type": "FeatureCollection",
                         "features": [...featuresLayerTwo]
                     };
@@ -220,7 +220,7 @@ const MapboxGLMap = ({mapDataLayerOne, mapDataLayerTwo,questionChartPercent}) =>
             });
         };
         if (!map) initializeMap({setMap, mapContainer});
-    }, [map, mapDataLayerOne, mapDataLayerTwo]);
+    }, [map, questionChartPercent]);
     return <div ref={el => (mapContainer.current = el)} style={styles}>
         {/* <Layer {...parkLayer} paint={{ 'fill-color': parkColor }} /> */}
     </div>;
