@@ -1,13 +1,15 @@
 import BootstrapNavbar from "./components/NavBar/BootstrapNavbar";
 import MapGl from "./components/Map3/MapboxGLMap";
 import ScatterChart from "./components/charts/scatter/ScatterChart";
-import React, {useState, useEffect} from "react";
+import QuestionInfoText from "./components/QuestionInfoArea/QuestionInfo";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 
 function App() {
     const [questionChartPercent, setQuestionChartPercent] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [questionInfo, setQuestionInfo] = useState("Question");
 
     // Just used to default to question 3
     useEffect(() => {
@@ -23,6 +25,7 @@ function App() {
                 // if promise resolves ,update state
                 .then(response => {
                     setQuestionChartPercent(response.data);
+                    setQuestionInfo("How has Covid-19 affected businesses in your area?");  // sets question info state
                     setLoading(false);
                 })
                 //if error ,log and show default data
@@ -35,6 +38,7 @@ function App() {
                 // if promise resolves ,update state
                 .then(response => {
                     setQuestionChartPercent(response.data);
+                    setQuestionInfo("Is vaccination uptake lesser in areas with lower income?");  // sets question info state
                     setLoading(false);
                 })
                 //if error ,log and show default data
@@ -44,14 +48,16 @@ function App() {
     }
     return (
         <div>
-            <BootstrapNavbar onQuestionChanged={fetchQuestionData}/>
+            <QuestionInfoText questionInfo={questionInfo} />
+            <BootstrapNavbar onQuestionChanged={fetchQuestionData} />
             {loading && <h3>Loading mapping data...</h3>}
             {(questionChartPercent && !loading) &&
-            <MapGl questionChartPercent={questionChartPercent}/>
+                <MapGl questionChartPercent={questionChartPercent} />
             }
             {(questionChartPercent && !loading) &&
-            <ScatterChart questionChartPercent={questionChartPercent}/>
+                <ScatterChart questionChartPercent={questionChartPercent} />
             }
+
 
 
         </div>

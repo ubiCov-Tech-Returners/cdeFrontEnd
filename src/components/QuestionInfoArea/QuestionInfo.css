@@ -1,0 +1,8 @@
+.questionInfo{
+    position: absolute;
+    background-color:rgba(10, 0, 0, .2);
+    width: 95%;
+    z-index: 1000;
+    top: 3.7em;
+    color: #fff; 
+}

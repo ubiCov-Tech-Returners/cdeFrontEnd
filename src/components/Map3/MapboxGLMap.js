@@ -7,6 +7,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+// import zIndex from "@material-ui/core/styles/zIndex";
+import QuestionInfoText from "../QuestionInfoArea/QuestionInfo";
 /*TODO - test Mapbox expressions https://github.com/mapbox/mapbox-gl-js/blob/main/test/expression.test.js*/
 const styles = {
     // width: "100vw",  // bootstrap now handles width depending on viewport
@@ -17,6 +19,7 @@ const styles = {
 const MapboxGLMap = ({ questionChartPercent }) => {
     const [map, setMap] = useState(null);
     const mapContainer = useRef();
+
     //Map properties
     const mBToken = 'pk.eyJ1IjoidHdpbmUxMmIiLCJhIjoiY2ttZ3hwdmJrMDF4MTJwbXRkNXN2eGExYSJ9.3BXNyT_qhst6zu9BparHGg';
     const minZoomForCircle = 7;
@@ -183,6 +186,7 @@ const MapboxGLMap = ({ questionChartPercent }) => {
                     }
                 });
 
+                // Add trackUserLocation to map
                 map.addControl(new mapboxgl.GeolocateControl({
                     positionOptions: {
                         enableHighAccuracy: true
@@ -226,8 +230,10 @@ const MapboxGLMap = ({ questionChartPercent }) => {
         };
         if (!map) initializeMap({ setMap, mapContainer });
     }, [map, questionChartPercent]);
-    return <div ref={el => (mapContainer.current = el)} style={styles}>
-        {/* <Layer {...parkLayer} paint={{ 'fill-color': parkColor }} /> */}
-    </div>;
+    return (
+        <div ref={el => (mapContainer.current = el)} style={styles}>
+        </div>
+    )
+
 };
 export default MapboxGLMap;
