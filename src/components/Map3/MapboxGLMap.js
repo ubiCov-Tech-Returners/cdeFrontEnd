@@ -4,11 +4,9 @@
 // https://en.wikipedia.org/wiki/GeoJSON
 // https://mapbox-guide.cube.dev/frontend-and-mapbox
 //useReducer
-import React, {useEffect, useRef, useState} from "react";
-import mapboxgl  from "mapbox-gl";
+import React, { useEffect, useRef, useState } from "react";
+import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-// import ReactMapGL, { Layer } from 'react-map-gl';
-/*TODO - Show color legend for  different data types  */
 /*TODO - test Mapbox expressions https://github.com/mapbox/mapbox-gl-js/blob/main/test/expression.test.js*/
 const styles = {
     // width: "100vw",  // bootstrap now handles width depending on viewport
@@ -16,7 +14,7 @@ const styles = {
     height: "calc(80vh - 80px)",
     position: "relative"
 };
-const MapboxGLMap = ({questionChartPercent}) => {
+const MapboxGLMap = ({ questionChartPercent }) => {
     const [map, setMap] = useState(null);
     const mapContainer = useRef();
     //Map properties
@@ -29,7 +27,7 @@ const MapboxGLMap = ({questionChartPercent}) => {
     const maxZoomCircleRadiusTop = 50;
     useEffect(() => {
         mapboxgl.accessToken = mBToken;
-        const initializeMap = ({setMap, mapContainer}) => {
+        const initializeMap = ({ setMap, mapContainer }) => {
             const map = new mapboxgl.Map({
                 container: mapContainer.current,
                 style: "mapbox://styles/mapbox/dark-v10", // stylesheet location
@@ -38,19 +36,19 @@ const MapboxGLMap = ({questionChartPercent}) => {
             });
             map.on("load", () => {
 
-                    //changing data to a collection of feature objects
-                    let questionChartData = questionChartPercent.map(featureCollection => featureCollection.features[0]);
-                    let uniqueDataTypes = [...new Set(questionChartData.map(featureObj => featureObj.properties.dataType))];
-                    let featuresLayerOne = questionChartData.filter(featureObj => featureObj.properties.dataType === uniqueDataTypes[0].toString());
-                    let featuresLayerTwo = questionChartData.filter(featureObj => featureObj.properties.dataType === uniqueDataTypes[1].toString());
-                    let mapDataLayerOne = {
-                        "type": "FeatureCollection",
-                        "features": [...featuresLayerOne]
-                    };
-                    let mapDataLayerTwo = {
-                        "type": "FeatureCollection",
-                        "features": [...featuresLayerTwo]
-                    };
+                //changing data to a collection of feature objects
+                let questionChartData = questionChartPercent.map(featureCollection => featureCollection.features[0]);
+                let uniqueDataTypes = [...new Set(questionChartData.map(featureObj => featureObj.properties.dataType))];
+                let featuresLayerOne = questionChartData.filter(featureObj => featureObj.properties.dataType === uniqueDataTypes[0].toString());
+                let featuresLayerTwo = questionChartData.filter(featureObj => featureObj.properties.dataType === uniqueDataTypes[1].toString());
+                let mapDataLayerOne = {
+                    "type": "FeatureCollection",
+                    "features": [...featuresLayerOne]
+                };
+                let mapDataLayerTwo = {
+                    "type": "FeatureCollection",
+                    "features": [...featuresLayerTwo]
+                };
 
                 map.addSource('ubicov', {
                     type: 'geojson',
@@ -185,6 +183,13 @@ const MapboxGLMap = ({questionChartPercent}) => {
                     }
                 });
 
+                map.addControl(new mapboxgl.GeolocateControl({
+                    positionOptions: {
+                        enableHighAccuracy: true
+                    },
+                    trackUserLocation: true
+                }));
+
                 // Create a popup, but don't add it to the map yet.
                 const popup = new mapboxgl.Popup({
                     closeButton: false,
@@ -219,7 +224,7 @@ const MapboxGLMap = ({questionChartPercent}) => {
                 map.resize();
             });
         };
-        if (!map) initializeMap({setMap, mapContainer});
+        if (!map) initializeMap({ setMap, mapContainer });
     }, [map, questionChartPercent]);
     return <div ref={el => (mapContainer.current = el)} style={styles}>
         {/* <Layer {...parkLayer} paint={{ 'fill-color': parkColor }} /> */}
