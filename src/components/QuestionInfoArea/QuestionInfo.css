@@ -1,8 +1,11 @@
 .questionInfo{
     position: absolute;
-    background-color:rgba(10, 0, 0, .2);
-    width: 95%;
+    /* background-color:rgba(10, 0, 0, .2); */
+    width: 93%;
     z-index: 1000;
-    top: 3.7em;
-    color: #fff; 
+    top: 4.3em;
+    left: 1.0em;
+    color: rgb(10, 190, 70); 
+    outline: 5em;
+    font-size: smaller;
 }
